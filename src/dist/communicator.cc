@@ -1,4 +1,5 @@
 #include "singa/dist/communicator.h"
+#include "singa/utils/cuda_utils.h"
 #include<iostream>
 namespace singa{
 
@@ -49,8 +50,8 @@ Communicator::Communicator(int nDev): nDev(nDev){
   //create cuda stream s
   s = (cudaStream_t*)malloc(sizeof(cudaStream_t)*nDev);
   for (int i = 0; i < nDev; ++i) {
-    CUDACHECK(cudaSetDevice(MPIRankInLocal*nDev + i));
-    CUDACHECK(cudaStreamCreate(s+i));
+    CUDA_CHECK(cudaSetDevice(MPIRankInLocal*nDev + i));
+    CUDA_CHECK(cudaStreamCreate(s+i));
   }
 
   // create nccl comms 
@@ -67,7 +68,7 @@ Communicator::Communicator(int nDev): nDev(nDev){
   //called across multiple GPUs in each thread/process
   NCCLCHECK(ncclGroupStart());
   for (int i=0; i<nDev; i++) {
-    CUDACHECK(cudaSetDevice(MPIRankInLocal*nDev + i));
+    CUDA_CHECK(cudaSetDevice(MPIRankInLocal*nDev + i));
     NCCLCHECK(ncclCommInitRank(comms+i,
                                totalMPIRanksInGlobal*nDev,
                                id, 
@@ -96,7 +97,7 @@ void Communicator::allReduce(int size, void** sendbuff, void** recvbuff)
 void Communicator::wait(){
   //synchronizing on CUDA stream to complete NCCL communication
   for (int i=0; i<nDev; i++)
-    CUDACHECK(cudaStreamSynchronize(s[i]));
+    CUDA_CHECK(cudaStreamSynchronize(s[i]));
 }
 
 Communicator::~Communicator(){
@@ -127,7 +128,6 @@ void synch(Tensor &t1, Communicator &c){
 
   //MPICHECK(MPI_Init(NULL, NULL));
   //Communicator c1(1);
-  //std::cout<<"pass1"<<std::endl;
 
   //int nDev = c.nDev;
 
@@ -135,14 +135,10 @@ void synch(Tensor &t1, Communicator &c){
   // void* addr2=t2.block()->mutable_data();
 
   void* addr[1] = {addr1};
-
-  //std::cout<<"pass2"<<std::endl;
   c.allReduce(1, addr, addr);
-  //std::cout<<"pass3"<<std::endl;
   c.wait();
 
   //t1 *= (1.0/c.totalMPIRanksInGlobal);
-
   //MPICHECK(MPI_Finalize());
 }
 
