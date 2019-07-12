@@ -24,14 +24,14 @@ from singa import autograd
 from singa import tensor
 from singa import device
 from singa import opt
-from singa import dist_opt
+#from singa import dist_opt
 
 import numpy as np
 from tqdm import trange
 
 if __name__ == "__main__":
     sgd = opt.SGD(lr=0.1, momentum=0.9, weight_decay=1e-5)
-    sgd = dist_opt.DistOpt(sgd)
+    sgd = opt.DistOpt(sgd)
 
     from resnet import resnet50
     model = resnet50()
