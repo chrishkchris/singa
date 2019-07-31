@@ -1,6 +1,8 @@
 #ifndef SINGA_DIST_COMMUNICATOR_H_
 #define SINGA_DIST_COMMUNICATOR_H_
 
+#ifdef USE_DIST
+
 #include <iostream>
 #include <cstdint>
 #include <unistd.h>
@@ -8,6 +10,7 @@
 #include <cuda_runtime.h>
 #include <nccl.h>
 #include <mpi.h>
+
 #include "singa/core/tensor.h"
 
 namespace singa{
@@ -63,4 +66,6 @@ void synch(Tensor &t1, Communicator &c);
 // void synch(Tensor &t1);
 
 }
+
+#endif // USE_DIST
 #endif
