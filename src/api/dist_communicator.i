@@ -6,6 +6,8 @@
 
 namespace singa{
 
+#if USE_DIST
+
 class Communicator {
 public:
   int MPIRankInGlobal;
@@ -15,5 +17,7 @@ public:
 };
 
 void synch(Tensor &t1, Communicator &c);
+
+#endif  // USE_DIST
 
 }
