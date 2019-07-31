@@ -1,7 +1,12 @@
-#include "singa/dist/communicator.h"
 #include "singa/utils/cuda_utils.h"
-#include<iostream>
+#include <iostream>
+
+#ifdef USE_DIST
+
+#include "singa/dist/communicator.h"
+
 namespace singa{
+
 
 static uint64_t getHostHash(const char* string) {
   // Based on DJB2, result = result * 33 + char
@@ -142,5 +147,6 @@ void synch(Tensor &t1, Communicator &c){
   //MPICHECK(MPI_Finalize());
 }
 
-
 }
+
+#endif // USE_DIST
