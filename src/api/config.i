@@ -24,6 +24,7 @@
 #define USE_PYTHON 1
 #define USE_MKLDNN 1
 #define USE_JAVA 0
+#define USE_DIST 0
 #define CUDNN_VERSION 7401
 
 // SINGA version
