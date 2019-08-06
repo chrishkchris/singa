@@ -137,10 +137,12 @@ void synch(Tensor &t1, Communicator &c){
   //int nDev = c.nDev;
 
   void* addr1=t1.block()->mutable_data();
-  // void* addr2=t2.block()->mutable_data();
+
+  //printf("%d",t1.Size());
+  //void* addr2=t2.block()->mutable_data();
 
   void* addr[1] = {addr1};
-  c.allReduce(1, addr, addr);
+  c.allReduce(t1.Size(), addr, addr);
   c.wait();
 
   //t1 *= (1.0/c.totalMPIRanksInGlobal);
