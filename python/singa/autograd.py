@@ -1130,11 +1130,9 @@ class _BatchNorm2d(Operation):
 
                 self.cache = (x, scale, mean, var)
             else:
-
                 y, mean, var = singa.CpuBatchNormForwardTraining(
                     self.handle, x, scale, bias, self.running_mean, self.running_var
                 )
- 
                 self.cache = (x, scale, mean, var)
         else:
             if isinstance(self.handle, singa.CudnnBatchNormHandle):

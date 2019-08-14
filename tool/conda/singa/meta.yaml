@@ -17,9 +17,14 @@
 # under the License.
 #
 
+# https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#templating-with-jinja
+# {% set data = load_setup_py_data(setup_file='../../../python/singa/setup.py', from_recipe_dir=True) %}
+
+{% set version = "2.1.0.dev" %}
+
 package:
   name: singa
-  version: "{{ GIT_DESCRIBE_TAG }}"
+  version: {{ version }}
 
 source:
   path: ../../../
@@ -28,9 +33,8 @@ source:
 build:
   number: 0
   script_env:
-    - CUDA   # E.g., export CUDA=9.0
-  string: {{ build_str }}
-  # py{{py}}_{{ environ.get('BUILD_STR', 'cpu') }}
+    - CUDA   # run `export CUDA=9.0` in the terminal
+  string: {{ build_str }}_py{{ py }}
 
 requirements:
   build:
@@ -44,10 +48,10 @@ requirements:
     - openblas 0.3.3
     - protobuf 3.6.1
     - glog 0.3.5
-    - python 3.6*
     - numpy 1.16.0
     - cudnn {{ cudnn }}       # ['cudnn' in str(build_str)]
     - mkl-dnn {{ mkldnn }}
+    - python {{ python }}
 
   run:
     - {{ pin_compatible('libopenblas', max_pin='x.x', lower_bound='0.3.3') }}
@@ -56,7 +60,9 @@ requirements:
     - {{ pin_compatible('numpy', max_pin='x.x') }}
     - {{ pin_compatible('mkl-dnn', max_pin='x.x') }}
     - cudnn {{ cudnn }}       # ['cudnn' in str(build_str)]
-    - python 3.6*
+    - python {{ python }}
+    - libprotobuf 3.6.1
+    - libopenblas 0.3.3
     - pillow
     - future
     - tqdm
@@ -66,8 +72,8 @@ requirements:
 test:
   source_files:
     - test/python/*.py
-  test:
-    - python run.py
+  commands:
+    - cd test/python && python run.py
 
 about:
   home: http://singa.apache.org/

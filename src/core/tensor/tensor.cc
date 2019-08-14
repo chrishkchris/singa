@@ -599,6 +599,12 @@ void RepeatDataToFrom(bool broadcast_flag, const vector<size_t>& repeats, int ax
         { __VA_ARGS__ }                                        \
         break;                                                 \
       }                                                        \
+      case ((kInt << _SwitchShift) + kCpp): {              \
+        typedef float DType;                                   \
+        typedef lang::Cpp Lang;                                \
+        { __VA_ARGS__ }                                        \
+        break;                                                 \
+      }                                                        \
       case ((kFloat32 << _SwitchShift) + kOpencl): {           \
         typedef float DType;                                   \
         typedef lang::Opencl Lang;                             \
@@ -654,6 +660,18 @@ void Tensor::SetValue(const SType x) {
 template void Tensor::SetValue<float>(const float x);
 template void Tensor::SetValue<int>(const int x);
 
+template <typename SType>
+void Tensor::GetValue(SType *value, const size_t num) {
+  CHECK(device_ == defaultDevice);
+  Tensor t(shape_, device_, data_type_);
+  // transform function arrange data in memory considering stride
+  singa::Transform(*this, &t);
+  auto ptr = static_cast<const SType*>(t.block()->data());
+  for (size_t i = 0; i < num; i++) value[i] = ptr[i];
+}
+template void Tensor::GetValue<float>(float *value, const size_t num);
+template void Tensor::GetValue<int>(int *value, const size_t num);
+
 #define EltwiseUnaryTensorFn(fn, t, ret)                               \
   do {                                                                 \
     TYPE_LANG_SWITCH(t.data_type(), DType, t.device()->lang(), Lang, { \
@@ -680,8 +698,19 @@ GenUnaryTensorFn(Sigmoid);
 GenUnaryTensorFn(Sign);
 GenUnaryTensorFn(Sqrt);
 GenUnaryTensorFn(Square);
-GenUnaryTensorFn(Tanh);
 GenUnaryTensorFn(Transform);
+GenUnaryTensorFn(Cos);
+GenUnaryTensorFn(Cosh);
+GenUnaryTensorFn(Acos);
+GenUnaryTensorFn(Acosh);
+GenUnaryTensorFn(Sin);
+GenUnaryTensorFn(Sinh);
+GenUnaryTensorFn(Asin);
+GenUnaryTensorFn(Asinh);
+GenUnaryTensorFn(Tan);
+GenUnaryTensorFn(Tanh);
+GenUnaryTensorFn(Atan);
+GenUnaryTensorFn(Atanh);
 
 #define EltwiseBinaryTensorFn(fn, lhs, rhs, ret)                            \
   do {                                                                      \
@@ -1299,10 +1328,10 @@ Tensor& Tensor::Reshape(const Shape &shape) {
   // do not use Product(shape_) due to stride 0 from broadcasting.
   CHECK_EQ(Product(shape), Size());
   if (transpose()) {
-    Tensor t(shape, device_, data_type_);
+    Tensor t(shape_, device_, data_type_);
     singa::Transform(*this, &t);
-    shape_ = shape;
     std::swap(t.block_, block_);
+    shape_ = shape;
   } else {
     shape_ = shape;
   }
