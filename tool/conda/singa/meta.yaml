@@ -27,8 +27,8 @@ package:
   version: {{ version }}
 
 source:
-  path: ../../../
-  # git_url: https://github.com/apache/incubator-singa.git
+  # path: ../../../
+  git_url: https://github.com/apache/incubator-singa.git
 
 build:
   number: 0
@@ -54,8 +54,6 @@ requirements:
     - python {{ python }}
 
   run:
-    - {{ pin_compatible('libopenblas', max_pin='x.x', lower_bound='0.3.3') }}
-    - {{ pin_compatible('libprotobuf', max_pin='x.x', lower_bound='3.6.1') }}
     - {{ pin_compatible('glog', max_pin='x.x') }}
     - {{ pin_compatible('numpy', max_pin='x.x') }}
     - {{ pin_compatible('mkl-dnn', max_pin='x.x') }}

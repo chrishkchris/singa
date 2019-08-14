@@ -31,4 +31,3 @@
 %include "model_metric.i"
 %include "model_operation.i"
 %include "io_snapshot.i"
-%include "dist_communicator.i"
