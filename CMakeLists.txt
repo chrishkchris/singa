@@ -30,7 +30,7 @@ LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Thirdparty)
 
 # Flags
 IF(UNIX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -O2 -fPIC -Wall -pthread")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -fPIC -Wall -pthread")
 ENDIF()
 IF(APPLE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++ -g -O2 -fPIC -Wall -pthread")
@@ -67,7 +67,7 @@ OPTION(ENABLE_DIST "Enable distributed training" OFF)
 OPTION(DISABLE_WARNINGS "Disable warnings under windows" ON)
 OPTION(USE_MODULES "Compile dependent libs as submodules together with singa" OFF)
 OPTION(USE_MKLDNN "Use mkl-dnn libs" OFF)
-
+OPTION(USE_DIST "Use nccl distributed module" OFF)
 
 # TODO: remove all USE_CBLAS in codes
 SET(USE_CBLAS ON)

@@ -18,17 +18,17 @@
 
 
 // Pass in cmake configurations to swig
-#cmakedefine01 USE_CUDA
-#cmakedefine01 USE_CUDNN
-#cmakedefine01 USE_OPENCL
-#cmakedefine01 USE_PYTHON
-#cmakedefine01 USE_MKLDNN
-#cmakedefine01 USE_JAVA
-#cmakedefine01 USE_DIST
-#cmakedefine CUDNN_VERSION ${CUDNN_VERSION}
+#define USE_CUDA 1
+#define USE_CUDNN 1
+#define USE_OPENCL 0
+#define USE_PYTHON 1
+#define USE_MKLDNN 1
+#define USE_JAVA 0
+#define USE_DIST 0
+#define CUDNN_VERSION 7401
 
 // SINGA version
-#cmakedefine SINGA_MAJOR_VERSION ${SINGA_MAJOR_VERSION}
-#cmakedefine SINGA_MINOR_VERSION ${SINGA_MINOR_VERSION}
-#cmakedefine SINGA_PATCH_VERSION ${SINGA_PATCH_VERSION}
-#cmakedefine SINGA_VERSION ${SINGA_VERSION}
+#define SINGA_MAJOR_VERSION 1
+#define SINGA_MINOR_VERSION 2
+/* #undef SINGA_PATCH_VERSION */
+#define SINGA_VERSION 1200
