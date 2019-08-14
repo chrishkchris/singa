@@ -19,10 +19,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Directives for doing spell check only for python comments
-# cSpell:includeRegExp #.*
-# cSpell:includeRegExp ("""|''')[^]*
-
 # This file is execfile()d with the current directory set to its
 # containing dir.
 #
@@ -43,6 +39,7 @@ import sys
 # will build document from code comments in these loactions
 sys.path.append(os.path.abspath('../python/'))
 sys.path.append(os.path.abspath('../build/python/'))
+
 
 # -- General configuration ------------------------------------------------
 from recommonmark.parser import CommonMarkParser
@@ -74,7 +71,7 @@ source_suffix = ['.rst', '.md']
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'en/index'
+master_doc = 'index'
 
 # General information about the project.
 project = u'incubator-singa'
@@ -142,6 +139,7 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
 
+
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -170,7 +168,7 @@ html_theme = 'sphinx_rtd_theme'
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 #
-html_logo = '_static/singa.png'
+html_logo = '/singa.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -181,7 +179,7 @@ html_logo = '_static/singa.png'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['../_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -266,21 +264,21 @@ htmlhelp_basename = 'singadoc'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
+     # The paper size ('letterpaper' or 'a4paper').
+     #
+     # 'papersize': 'letterpaper',
 
-    # The font size ('10pt', '11pt' or '12pt').
-    #
-    # 'pointsize': '10pt',
+     # The font size ('10pt', '11pt' or '12pt').
+     #
+     # 'pointsize': '10pt',
 
-    # Additional stuff for the LaTeX preamble.
-    #
-    # 'preamble': '',
+     # Additional stuff for the LaTeX preamble.
+     #
+     # 'preamble': '',
 
-    # Latex figure (float) alignment
-    #
-    # 'figure_align': 'htbp',
+     # Latex figure (float) alignment
+     #
+     # 'figure_align': 'htbp',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
@@ -317,16 +315,20 @@ latex_documents = [
 #
 # latex_domain_indices = True
 
+
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'incubator-singa', u'incubator-singa Documentation',
-              [author], 1)]
+man_pages = [
+    (master_doc, 'incubator-singa', u'incubator-singa Documentation',
+     [author], 1)
+]
 
 # If true, show URL addresses after external links.
 #
 # man_show_urls = False
+
 
 # -- Options for Texinfo output -------------------------------------------
 
@@ -334,8 +336,9 @@ man_pages = [(master_doc, 'incubator-singa', u'incubator-singa Documentation',
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'incubator-singa', u'incubator-singa Documentation', author,
-     'incubator-singa', 'One line description of project.', 'Miscellaneous'),
+    (master_doc, 'incubator-singa', u'incubator-singa Documentation',
+     author, 'incubator-singa', 'One line description of project.',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.

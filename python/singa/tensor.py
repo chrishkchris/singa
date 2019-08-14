@@ -39,9 +39,7 @@ Example usage::
     dev = device.get_default_device()
     x.to_device(dev)  # move the data to a gpu device
 
-    r = tensor.relu(x)
-
-    s = tensor.to_numpy(r)  # tensor -> numpy array
+    s = tensor.to_numpy(x)  # tensor -> numpy array
 
 There are two sets of tensor functions,
 
@@ -470,7 +468,7 @@ class Tensor(object):
             self.data *= float(x)
         return self
 
-    def __idiv__(self, x):
+    def __itruediv__(self, x):
         ''' inplace element-wise division by a tensor or a float value.
 
         Args:
