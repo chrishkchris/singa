@@ -1,3 +1,21 @@
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "singa/utils/cuda_utils.h"
 #include <iostream>
 
@@ -34,7 +52,6 @@ Communicator::Communicator(int nDev): nDev(nDev){
   // get MPI Global Ranks and total Ranks
   MPICHECK(MPI_Comm_rank(MPI_COMM_WORLD, &MPIRankInGlobal));
   MPICHECK(MPI_Comm_size(MPI_COMM_WORLD, &totalMPIRanksInGlobal));
-  //std::cout<<"g rank " << MPIRankInGlobal << "\n";
 
   //calculating MPIRankInLocal which is used in selecting a GPU
   MPIRankInLocal=0;
@@ -111,42 +128,14 @@ Communicator::~Communicator(){
   MPICHECK(MPI_Finalize());
 }
 
-// void synch(Tensor &t1, Tensor &t2){
-
-//   MPICHECK(MPI_Init(NULL, NULL));
-//   Communicator c(2);
-//   std::cout<<"pass1"<<std::endl;
-
-
-//   void* addr1=t1.block()->mutable_data();
-//   void* addr2=t2.block()->mutable_data();
-
-//   void* addr[2] = {addr1,addr2};
-
-//   std::cout<<"pass2"<<std::endl;
-//   c.allReduce(1, addr, addr);
-//   c.wait();
-//   MPICHECK(MPI_Finalize());
-// }
-
 void synch(Tensor &t1, Communicator &c){
 
-  //MPICHECK(MPI_Init(NULL, NULL));
-  //Communicator c1(1);
-
-  //int nDev = c.nDev;
-
   void* addr1=t1.block()->mutable_data();
-
-  //printf("%d",t1.Size());
-  //void* addr2=t2.block()->mutable_data();
 
   void* addr[1] = {addr1};
   c.allReduce(t1.Size(), addr, addr);
   c.wait();
 
-  //t1 *= (1.0/c.totalMPIRanksInGlobal);
-  //MPICHECK(MPI_Finalize());
 }
 
 }
