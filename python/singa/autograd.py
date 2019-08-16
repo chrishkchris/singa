@@ -840,7 +840,7 @@ class _Conv2d(Operation):
                 db = singa.GpuConvBackwardb(dy, self.inputs[2], self.handle)
                 return dx, dW, db
             else:
-                return dx, dW #, None
+                return dx, dW, None
         else:
             dx = singa.CpuConvBackwardx(
                 dy, self.inputs[1], self.inputs[0], self.handle
@@ -852,7 +852,7 @@ class _Conv2d(Operation):
                 db = singa.CpuConvBackwardb(dy, self.inputs[2], self.handle)
                 return dx, dW, db
             else:
-                return dx, dW #, None
+                return dx, dW, None
 
 def conv2d(handle, x, W, b=None):
     if b is None:
