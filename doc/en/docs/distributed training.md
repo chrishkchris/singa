@@ -158,18 +158,7 @@ test_y = to_categorical(test_y, num_classes)
 # Normalization
 train_x = train_x / 255
 test_x = test_x / 255
-
-print((train_x.shape))
-print((train_y.shape))
-print((test_x.shape))
-print((test_y.shape))
 ```
-
-    (60000, 1, 28, 28)
-    (60000, 10)
-    (10000, 1, 28, 28)
-    (10000, 10)
-    
 
 5. Data Partitioning of the Training and Evaluation Datasets
 
