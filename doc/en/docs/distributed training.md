@@ -19,7 +19,7 @@ Finally, the parameter update of Stochastic Gradient Descent (SGD) can then be p
 
 ## Instruction to Use:
 
-SINGA supports two ways to launch the distributed training, namely (I) MPI (Message Passing Interface) and (II) python multiprocessing.
+SINGA supports two ways to launch the distributed training, namely I. MPI (Message Passing Interface) and II. python multiprocessing.
 
 ### I. Using MPI
 
