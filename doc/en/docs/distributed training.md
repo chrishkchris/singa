@@ -17,11 +17,11 @@ The all-reduce operation by NCCL can be used to reduce and synchronize the param
 
 Finally, the parameter update of Stochastic Gradient Descent (SGD) can then be performed by using the overall stochastic gradient obtained by the all-reduce process.
 
-## Instruction to use:
+## Instruction to Use:
 
-SINGA supports two ways to launch the distributed training, namely (A) MPI (Message Passing Interface) and (B) python multiprocessing.
+SINGA supports two ways to launch the distributed training, namely (I) MPI (Message Passing Interface) and (II) python multiprocessing.
 
-### Using MPI
+### I. Using MPI
 
 The following are the detailed steps to start up a distributed training with MPI, using MNIST dataset as an example:
 
@@ -352,7 +352,7 @@ Training loss = 74.658951, training accuracy = 0.974793
 Evaluation accuracy = 0.982672, Elapsed Time = 0.717571s
 ```
 
-### Using Python multiprocessing
+### II. Using Python multiprocessing
 
 For single node, we can use Python multiprocessing module instead of MPI. It will just need a small portion of code changes.
 
