@@ -413,4 +413,4 @@ sgd.backward_and_update_half(loss)
 backward_and_partial_update(loss)
 ```
 
-   It performs asychronous training where one parameter partition is all-reduced per iteration.
+<br />It performs asychronous training where one parameter partition is all-reduced per iteration.
