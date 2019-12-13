@@ -397,7 +397,7 @@ dev = device.create_cuda_gpu_on(sgd.rank_in_local)
 sgd.backward_and_update(loss)
 ```
 
-loss: the objective function of the deep learning model optimization, e.g. for classification problem it can be the output of the softmax_cross_entropy function.
+  Input: loss is the objective function of the deep learning model optimization, e.g. for classification problem it can be the output of the softmax_cross_entropy function.
 
 3. Backward propagation and distributed parameter update, using half precision for gradient communication:
 
@@ -405,7 +405,7 @@ loss: the objective function of the deep learning model optimization, e.g. for c
 sgd.backward_and_update_half(loss)
 ```
 
-It converts the gradients to 16 bits half precision format before allreduce
+   It converts the gradients to 16 bits half precision format before allreduce
 
 4. Backward propagation and distributed asychronous training with partial parameter synchronization:
 
@@ -413,4 +413,4 @@ It converts the gradients to 16 bits half precision format before allreduce
 backward_and_partial_update(loss)
 ```
 
-It performs asychronous training where one parameter partition is all-reduced per iteration.
+   It performs asychronous training where one parameter partition is all-reduced per iteration.
