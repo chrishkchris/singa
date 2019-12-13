@@ -307,7 +307,7 @@ cat host_file
 mpiexec --hostfile host_file python3 mnist_dist_demo.py
 ```
 
-It could result in several times speed up compared to the single GPU training.
+&nbsp;&nbsp;&nbsp;It could result in several times speed up compared to the single GPU training.
 ```
 Starting Epoch 0:
 Training loss = 673.246277, training accuracy = 0.760517
@@ -397,7 +397,7 @@ dev = device.create_cuda_gpu_on(sgd.rank_in_local)
 sgd.backward_and_update(loss)
 ```
 
-  Input: loss is the objective function of the deep learning model optimization, e.g. for classification problem it can be the output of the softmax_cross_entropy function.
+&nbsp;&nbsp;&nbsp;Input: loss is the objective function of the deep learning model optimization, e.g. for classification problem it can be the output of the softmax_cross_entropy function.
 
 3. Backward propagation and distributed parameter update, using half precision for gradient communication:
 
@@ -405,7 +405,7 @@ sgd.backward_and_update(loss)
 sgd.backward_and_update_half(loss)
 ```
 
-   It converts the gradients to 16 bits half precision format before allreduce
+&nbsp;&nbsp;&nbsp;It converts the gradients to 16 bits half precision format before allreduce
 
 4. Backward propagation and distributed asychronous training with partial parameter synchronization:
 
@@ -413,4 +413,4 @@ sgd.backward_and_update_half(loss)
 backward_and_partial_update(loss)
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It performs asychronous training where one parameter partition is all-reduced per iteration.
+&nbsp;&nbsp;&nbsp;It performs asychronous training where one parameter partition is all-reduced per iteration.
