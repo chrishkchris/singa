@@ -292,7 +292,7 @@ for epoch in range(max_epoch):
 
 9. Save the above training code in a python file, e.g. mnist_dist_demo.py
 
-10. Generate a host_file to be used by the MPI, e.g. the hostfile below uses 4 processes and hence 4 GPUs for the training.
+10. Generate a hostfile to be used by the MPI, e.g. the hostfile below uses 4 processes and hence 4 GPUs for the training.
 
 ```python
 cat host_file
@@ -343,7 +343,7 @@ Evaluation accuracy = 0.982672, Elapsed Time = 0.717571s
 
 ### II. Using Python multiprocessing
 
-For single node, we can use Python multiprocessing module instead of MPI. It will just need a small portion of code changes.
+For single node, we can use Python multiprocessing module instead of MPI. It needs just a small portion of code changes:
 
 1. Put all the above training codes in a function, e.g. train_mnist_cnn
 
@@ -366,7 +366,7 @@ For single node, we can use Python multiprocessing module instead of MPI. It wil
         p.start()
 ```
 
-3. In the training code, it needs to pass the arguments defined above to the DistOpt object.
+3. In the training code, it should pass the arguments defined above to the DistOpt object.
 
 ```python
 sgd = opt.DistOpt(sgd, nccl_id=nccl_id, gpu_num=gpu_num, gpu_per_node=gpu_per_node)
