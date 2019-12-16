@@ -48,7 +48,7 @@ sgd.backward_and_update_half(loss)
 4. Backward propagation and distributed asychronous training with partial parameter synchronization:
 
 ```python
-backward_and_partial_update(loss)
+sgd.backward_and_partial_update(loss)
 ```
 
 &nbsp;&nbsp;&nbsp;It performs asychronous training where one parameter partition is all-reduced per iteration.
