@@ -17,6 +17,42 @@ The all-reduce operation by NCCL can be used to reduce and synchronize the param
 
 Finally, the parameter update of Stochastic Gradient Descent (SGD) can then be performed by using the overall stochastic gradient obtained by the all-reduce process.
 
+## Python DistOpt Methods:
+
+There are a list of methods for distributed training with DistOpt:
+
+1. Create a DistOpt with the SGD object and device assignment:
+
+```python
+sgd = opt.SGD(lr=0.005, momentum=0.9, weight_decay=1e-5)
+sgd = opt.DistOpt(sgd)
+dev = device.create_cuda_gpu_on(sgd.rank_in_local)
+```
+
+2. Backward propagation and distributed parameter update:
+
+```python
+sgd.backward_and_update(loss)
+```
+
+&nbsp;&nbsp;&nbsp;Input: loss is the objective function of the deep learning model optimization, e.g. for classification problem it can be the output of the softmax_cross_entropy function.
+
+3. Backward propagation and distributed parameter update, using half precision for gradient communication:
+
+```python
+sgd.backward_and_update_half(loss)
+```
+
+&nbsp;&nbsp;&nbsp;It converts the gradients to 16 bits half precision format before allreduce
+
+4. Backward propagation and distributed asychronous training with partial parameter synchronization:
+
+```python
+backward_and_partial_update(loss)
+```
+
+&nbsp;&nbsp;&nbsp;It performs asychronous training where one parameter partition is all-reduced per iteration.
+
 ## Instruction to Use:
 
 SINGA supports two ways to launch the distributed training, namely I. MPI (Message Passing Interface) and II. python multiprocessing.
@@ -378,39 +414,3 @@ sgd = opt.DistOpt(sgd, nccl_id=nccl_id, gpu_num=gpu_num, gpu_per_node=gpu_per_no
 ## Full Examples
 
 The full examples of the distributed training using the MNIST dataset is available in the examples folder of SINGA: (1) MPI: examples/autograd/multi_dist.py and (2) Python Multiprocessing: examples/autograd/mnist_multiprocess.py
-
-## Python DistOpt Methods:
-
-There are a list of methods for distributed training with DistOpt:
-
-1. Create a DistOpt with the SGD object and device assignment:
-
-```python
-sgd = opt.SGD(lr=0.005, momentum=0.9, weight_decay=1e-5)
-sgd = opt.DistOpt(sgd)
-dev = device.create_cuda_gpu_on(sgd.rank_in_local)
-```
-
-2. Backward propagation and distributed parameter update:
-
-```python
-sgd.backward_and_update(loss)
-```
-
-&nbsp;&nbsp;&nbsp;Input: loss is the objective function of the deep learning model optimization, e.g. for classification problem it can be the output of the softmax_cross_entropy function.
-
-3. Backward propagation and distributed parameter update, using half precision for gradient communication:
-
-```python
-sgd.backward_and_update_half(loss)
-```
-
-&nbsp;&nbsp;&nbsp;It converts the gradients to 16 bits half precision format before allreduce
-
-4. Backward propagation and distributed asychronous training with partial parameter synchronization:
-
-```python
-backward_and_partial_update(loss)
-```
-
-&nbsp;&nbsp;&nbsp;It performs asychronous training where one parameter partition is all-reduced per iteration.
