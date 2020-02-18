@@ -94,8 +94,8 @@ class ConvHandle {
   dnnl::memory::desc conv_w_md;
   dnnl::memory::desc conv_b_md;
   dnnl::memory::desc conv_y_md;
-  dnnl::reorder::primitive_desc *reorder_pd_x;
-  dnnl::reorder::primitive_desc *reorder_pd_w;
+  // dnnl::reorder::primitive_desc *reorder_pd_x;
+  // dnnl::reorder::primitive_desc *reorder_pd_w;
 
   Tensor *db;
 #endif  // USE_DNNL
