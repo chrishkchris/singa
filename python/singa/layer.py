@@ -162,7 +162,16 @@ class Layer(object, metaclass=LayerMeta):
             del self._layers[name]
         else:
             object.__delattr__(self, name)
-
+    
+    def register_layers(self, *args):
+        if len(args) == 1 and isinstance(args[0], OrderedDict):
+            for key, value in args[0].items():
+                self._layers[name] = value
+        else:
+            for idx, value in enumerate(args):
+                value.name = str(idx)
+                self._layers[value.name] = value
+                value.__dict__['_parent'] = self
 
 class Linear(Layer):
     """
@@ -626,7 +635,7 @@ class BatchNorm2d(Layer):
     Generate a BatchNorm 2d operator
     """
 
-    def __init__(self, momentum=0.9):
+    def __init__(self, *args, momentum=0.9):
         """
         Args:
             momentum (float): Factor used in computing the running mean and
@@ -634,7 +643,12 @@ class BatchNorm2d(Layer):
         """
         super(BatchNorm2d, self).__init__()
 
+        if len(args) > 0:
+            self.channels = args[0]
+        if len(args) > 1:
+            self.momentum = args[1]
         self.momentum = momentum
+        assert 0 <= momentum <= 1.0, ("Illegal momentum")
 
     def initialize(self, x):
         self.channels = x.shape[1]

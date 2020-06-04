@@ -89,7 +89,19 @@ class Block(layer.Layer):
             self.layers[0] = autograd.ReLU()
 
         if strides != 1:
-            self.layers.append(layer.MaxPool2d(3, strides, padding + 1))
+            self.layers.append(layer.MaxPool2d(3, strides, padding + 1))       
+
+        def register_layers(self, *args):
+            if len(args) == 1 and isinstance(args[0], OrderedDict):
+                for key, value in args[0].items():
+                    self._layers[name] = value
+            else:
+                for idx, value in enumerate(args):
+                    value.name = str(idx)
+                    self._layers[value.name] = value
+                    value.__dict__['_parent'] = self
+
+        register_layers(self.layers)
 
     def __call__(self, x):
         y = self.layers[0](x)
@@ -105,7 +117,19 @@ class Block(layer.Layer):
             skip = x
         y = autograd.add(y, skip)
         return y
-
+    
+'''
+    def set_params(self, parameters):
+        super().set_params(parameters)
+        for lyr in self.layers:
+            lyr.set_params(parameters)
+    
+    def get_params(self):
+        params = super().get_params()
+        for lyr in self.layers:
+            params.update(lyr.get_params())
+        return params
+'''
 
 class Xception(model.Model):
     """
@@ -218,6 +242,8 @@ class Xception(model.Model):
 
         self.globalpooling = layer.MaxPool2d(10, 1)
         self.fc = layer.Linear(2048, num_classes)
+
+        #register_layers(self.layers)
 
     def features(self, input):
         x = self.conv1(input)

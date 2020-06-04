@@ -96,6 +96,18 @@ class Block(layer.Layer):
         if strides != 1:
             self.layers.append(layer.MaxPool2d(3, strides, padding + 1))
 
+        def register_layers(self, *args):
+            if len(args) == 1 and isinstance(args[0], OrderedDict):
+                for key, value in args[0].items():
+                    self._layers[name] = value
+            else:
+                for idx, value in enumerate(args):
+                    value.name = str(idx)
+                    self._layers[value.name] = value
+                    value.__dict__['_parent'] = self
+        
+        register_layers(self.layers)
+
     def __call__(self, x):
         y = self.layers[0](x)
         for layer in self.layers[1:]:

@@ -188,6 +188,8 @@ def run(global_rank,
     model.compile([tx], is_train=True, use_graph=graph, sequential=sequential)
     dev.SetVerbosity(verbosity)
 
+    model.load_states(fpath="trained_model_resnet")
+
     # Training and Evaluation Loop
     for epoch in range(max_epoch):
         start_time = time.time()
@@ -258,6 +260,8 @@ def run(global_rank,
 
     dev.PrintTimeProfiling()
 
+    #if global_rank == 0:
+    #    model.save_states(fpath="trained_model_resnet")
 
 if __name__ == '__main__':
     # use argparse to get command config: max_epoch, model, data, etc. for single gpu training
