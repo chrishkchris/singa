@@ -37,13 +37,13 @@ jobs:
         env:
           CMAKE_INCLUDE_PATH: /usr/local/opt/openblas/include:$CMAKE_INCLUDE_PATH
           CMAKE_LIBRARY_PATH: /usr/local/opt/openblas/lib:$CMAKE_LIBRARY_PATH
-          DNNL_ROOT: /tmp/dnnl_mac_1.1.3_cpu_iomp/
+          DNNL_ROOT: /tmp/dnnl_mac_1.1.3_cpu_iomp
       - name: build
         run: cd build && make
         env:
           CXXFLAGS: -I  /Users/runner/hostedtoolcache/Python/3.7.8/x64/lib/python3.7/site-packages/numpy/core/include $CXXFLAGS
           LD_LIBRARY_PATH: /usr/local/opt/openblas/lib:/tmp/dnnl_mac_1.1.3_cpu_iomp/lib:$LD_LIBRARY_PATH
       - name: C++ test
-        run: ls /tmp/dnnl_mac_1.1.3_cpu_iomp/lib && otool -L build/bin/test_singa && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.1.3_cpu_iomp/libdnnl.1.dylib build/bin/test_singa && build/bin/test_singa
+        run: ls /tmp/dnnl_mac_1.1.3_cpu_iomp/lib && otool -L build/bin/test_singa && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.1.3_cpu_iomp/lib/libdnnl.1.dylib build/bin/test_singa && build/bin/test_singa
         env:
           LD_LIBRARY_PATH: /usr/local/opt/openblas/lib:/tmp/dnnl_mac_1.1.3_cpu_iomp/lib:$LD_LIBRARY_PATH
