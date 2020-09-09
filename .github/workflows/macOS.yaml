@@ -44,6 +44,6 @@ jobs:
           CXXFLAGS: -I  /Users/runner/hostedtoolcache/Python/3.7.8/x64/lib/python3.7/site-packages/numpy/core/include $CXXFLAGS
           LD_LIBRARY_PATH: /usr/local/opt/openblas/lib:/tmp/dnnl_mac_1.1.3_cpu_iomp/lib:$LD_LIBRARY_PATH
       - name: C++ test
-        run: brew install llvm && brew install libiomp && brew search libiomp && otool -L build/bin/test_singa && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.1.3_cpu_iomp/lib/libdnnl.1.dylib /Users/runner/work/singa/singa/build/lib/libsinga.dylib && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.1.3_cpu_iomp/lib/libdnnl.1.dylib build/bin/test_singa && otool -L /Users/runner/work/singa/singa/build/lib/libsinga.dylib && build/bin/test_singa
+        run: brew install llvm && brew search libiomp && otool -L build/bin/test_singa && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.1.3_cpu_iomp/lib/libdnnl.1.dylib /Users/runner/work/singa/singa/build/lib/libsinga.dylib && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.1.3_cpu_iomp/lib/libdnnl.1.dylib build/bin/test_singa && otool -L /Users/runner/work/singa/singa/build/lib/libsinga.dylib && build/bin/test_singa
         env:
           LD_LIBRARY_PATH: /usr/local/opt/openblas/lib:/tmp/dnnl_mac_1.1.3_cpu_iomp/lib:$LD_LIBRARY_PATH
