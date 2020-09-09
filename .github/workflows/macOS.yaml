@@ -31,9 +31,10 @@ jobs:
         with:
           python-version: "3.7"
       - name: install-build-dependencies
-        run: brew install protobuf swig opencv glog lmdb numpy \
-             && pip3 install numpy && wget https://github.com/oneapi-src/oneDNN/releases/download/v1.2/dnnl_mac_1.2.0_cpu_tbb.tgz -P /tmp \
-             && tar zxf /tmp/dnnl_mac_1.2.0_cpu_tbb.tgz -C /tmp
+        run: |
+         brew install protobuf swig opencv glog lmdb numpy
+         pip3 install numpy && wget https://github.com/oneapi-src/oneDNN/releases/download/v1.2/dnnl_mac_1.2.0_cpu_tbb.tgz -P /tmp
+         tar zxf /tmp/dnnl_mac_1.2.0_cpu_tbb.tgz -C /tmp
       - name: configure
         run: mkdir build && cd build && cmake -DUSE_PYTHON3=YES -DENABLE_TEST=YES -DUSE_DNNL=YES ..
         env:
@@ -46,9 +47,10 @@ jobs:
           CXXFLAGS: -I  /Users/runner/hostedtoolcache/Python/3.7.8/x64/lib/python3.7/site-packages/numpy/core/include $CXXFLAGS
           LD_LIBRARY_PATH: /usr/local/opt/openblas/lib:/tmp/dnnl_mac_1.2.0_cpu_tbb/lib:$LD_LIBRARY_PATH
       - name: C++ test
-        run: brew install tbb \
-             && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.2.0_cpu_tbb/lib/libdnnl.1.dylib /Users/runner/work/singa/singa/build/lib/libsinga.dylib \
-             && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.2.0_cpu_tbb/lib/libdnnl.1.dylib build/bin/test_singa \
-             && build/bin/test_singa
+        run: |
+         brew install tbb
+         install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.2.0_cpu_tbb/lib/libdnnl.1.dylib /Users/runner/work/singa/singa/build/lib/libsinga.dylib
+         install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.2.0_cpu_tbb/lib/libdnnl.1.dylib build/bin/test_singa
+         build/bin/test_singa
         env:
           LD_LIBRARY_PATH: /usr/local/opt/openblas/lib:/tmp/dnnl_mac_1.2.0_cpu_tbb/lib:$LD_LIBRARY_PATH
