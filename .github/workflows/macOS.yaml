@@ -46,4 +46,4 @@ jobs:
       - name: C++ test
         run: brew install tbb && brew search tbb && otool -L build/bin/test_singa && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.1.3_cpu_tbb/lib/libdnnl.1.dylib /Users/runner/work/singa/singa/build/lib/libsinga.dylib && install_name_tool -change libdnnl.1.dylib /tmp/dnnl_mac_1.1.3_cpu_tbb/lib/libdnnl.1.dylib build/bin/test_singa && otool -L /Users/runner/work/singa/singa/build/lib/libsinga.dylib && build/bin/test_singa
         env:
-          LD_LIBRARY_PATH: /usr/local/opt/openblas/lib:/tmp/dnnl_mac_1.1.3_cpu_iomp/lib:$LD_LIBRARY_PATH
+          LD_LIBRARY_PATH: /usr/local/opt/openblas/lib:/tmp/dnnl_mac_1.1.3_cpu_tbb/lib:$LD_LIBRARY_PATH
