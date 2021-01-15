@@ -44,3 +44,5 @@ SINGA for image classification.
   using MPI and NCCL for communication.
 
 * `benchmark.py` tests the training throughput using `ResNet50` as the workload.
+
+try
